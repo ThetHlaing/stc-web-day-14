@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Product Detail</title>
+    <link rel="stylesheet" href="./css/app.css" type="text/css" />
+  </head>
+  <body>
+    <div class="nav-bar"></div>
+    <div id="app">
+      <div class="product">
+        <div class="product-image"><img :src="image" /></div>
+
+        <div class="product-info">
+          <h1>{{ product.name }}</h1>
+          <p v-if="inventory > 10">In Stock</p>
+          <p v-else-if="inventory < 10 & inventory > 0">
+            Almost out of stock ({{ inventory }} items left)
+          </p>
+          <p v-else>Out of Stock</p>
+          <ul>
+            <li v-for="(detail,index) in details" :key="index">{{ detail }}</li>
+          </ul>
+          <div
+            v-for="variant in variants"
+            :key="variant.id"
+            @mouseover="productChange(variant.image)"
+            class="color-box"
+            :style="{backgroundColor: variant.color}"
+          ></div>
+          <br />
+          <button
+            @click="addToCart"
+            :disabled="!inStock"
+            :class="{disabledButton : !inStock}"
+          >
+            Add to Cart
+          </button>
+          <button @click="clearCart">Clear Cart</button>
+          <div class="cart">
+            <p>Cart ( {{ cart }} )</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
